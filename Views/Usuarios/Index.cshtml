@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebMySQL.Models.Usuario>
+
+
+
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+   
+}
+
+<h1>Lista de Usuarios</h1>
+
+<p>
+    
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action = "Index" asp-route-sortOrder = "@ViewData["NomeSort"]">@Html.DisplayNameFor(Model => Model.DTN_ID)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DTN_DESTINATION)
+            </th>
+            <th>
+                <form asp-controller="Usuarios" asp-action="Index">
+                    
+                    <input type="text" name="SearchString" placeholder="DTN_ID ou DTN_DESTINATION"/>
+                    <input type="submit" value="Buscar" class="btn btn-primary"/>
+                    <a asp-action = "Index" class="btn btn-light">Full list</a> 
+                    
+                    
+                </form>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                
+                @Html.DisplayFor(modelItem => item.DTN_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTN_DESTINATION)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-light">Detalhar</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>   
+            </td>
+            
+        </tr>
+        
+    }       
+    </tbody>  
+    <div class="table-responsive">
+        <table width="28% ">
+            <tr>
+                <td>
+                    <a asp-action="Create" class="btn btn-primary" >Adicionar</a> 
+                </td>
+                <td >
+                
+                    @using (Html.BeginForm("Exportar", "Usuarios", FormMethod.Post))
+                    {
+                        <input class="btn btn-success" type="submit" id="btnSubmit" value="Salvar CSV" />
+                        
+                    }
+                </td>
+            </tr>
+        </table>        
+   </div>
+    
+    
+</table>
+
